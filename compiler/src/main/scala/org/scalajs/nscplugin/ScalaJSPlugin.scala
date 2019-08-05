@@ -111,8 +111,8 @@ class ScalaJSPlugin(val global: Global) extends NscPlugin {
       ScalaJSPlugin.this.generatedJSAST(clDefs)
   }
 
-  override def processOptions(options: List[String],
-      error: String => Unit): Unit = {
+  override def init(options: List[String],
+      error: String => Unit): Boolean = {
     import ScalaJSOptions.URIMap
     import scalaJSOpts._
 
@@ -161,6 +161,8 @@ class ScalaJSPlugin(val global: Global) extends NscPlugin {
           "Use another mapSourceURI option.")
     else if (absSourceMap.isDefined && relSourceMap.isEmpty)
       error("absSourceMap requires the use of relSourceMap")
+
+    true
   }
 
   override val optionsHelp: Option[String] = Some(s"""
